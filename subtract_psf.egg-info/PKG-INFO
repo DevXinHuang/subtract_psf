@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: subtract_psf
+Version: 0.1
+Summary: Simulate PSF subtraction with synthetic NIRSpec IFU observations.
+Home-page: https://github.com/ojustino/subtract_psf
+Author: ojustino
+Author-email: ojustino@users.noreply.github.com
+License: BSD-3
+Keywords: Astronomy
+Requires-Python: >=3.5
+License-File: LICENSE.txt
+Requires-Dist: astropy>=3.0.0
+Requires-Dist: numpy>=1.13.0
+Requires-Dist: matplotlib>=2.0.0
+Requires-Dist: poppy>=0.9.0
+Requires-Dist: webbpsf>=0.9.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

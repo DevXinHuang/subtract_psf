@@ -1,8 +1,9 @@
 import numpy as np
 import sys
 import warnings
+import platform
 
-from setuptools import setup
+from setuptools import setup, find_packages
 from io import StringIO
 
 # enable stdout to be saved as a variable to learn more about numpy's config.
@@ -21,13 +22,17 @@ split_output = [line.lstrip() for line in output if len(line)]
 has_mkl = [line for line in split_output
            if line.startswith('libraries =') and line.find('mkl')]
 
-if len(has_mkl) == 0:
-    raise ImportError('Please note that you need to be using an mkl-assisted '
-                      'version of numpy for synthetic PSF generation in '
-                      '`make_img_dirs.py` and `create_images.py` to work '
-                      'properly. (Installing an Anaconda distribution gets you '
-                      'that, but note that mkl only works with '
-                      "Intel-compatible processors.)")
+# Check for ARM-based processor and skip MKL check if detected
+if platform.processor() == 'arm':
+    warnings.warn('Skipping MKL check on ARM-based processor. Using OpenBLAS or compatible libraries instead.')
+else:
+    if len(has_mkl) == 0:
+        raise ImportError('Please note that you need to be using an mkl-assisted '
+                          'version of numpy for synthetic PSF generation in '
+                          '`make_img_dirs.py` and `create_images.py` to work '
+                          'properly. (Installing an Anaconda distribution gets you '
+                          'that, but note that mkl only works with '
+                          "Intel-compatible processors.)")
 
 setup(name='subtract_psf',
       version='0.1',
@@ -41,4 +46,5 @@ setup(name='subtract_psf',
       install_requires=['astropy>=3.0.0', 'numpy>=1.13.0', 'matplotlib>=2.0.0',
                         'poppy>=0.9.0', 'webbpsf>=0.9.0'],
       python_requires='>=3.5',
-      zip_safe=False)
+      zip_safe=False,
+      packages=find_packages(include=['subtract_psf', 'subtract_psf.*']))
